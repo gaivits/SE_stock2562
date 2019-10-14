@@ -1,9 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
 class CreateCheckModelsTable extends Migration
 {
     /**
@@ -17,14 +15,13 @@ class CreateCheckModelsTable extends Migration
             $table->increments('id');
             $table->string('firstname');
             $table->string('lastname');
-            $table->string('stationery');
+            $table->string('item');
             $table->unsignedInteger('amount');
+            $table->date('date')->useCurrent = true;
             });
     }
-
     /**
-     * Reverse the migrations.
-     *
+     * Reverse the migration
      * @return void
      */
     public function down()

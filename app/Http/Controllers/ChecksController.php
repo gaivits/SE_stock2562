@@ -16,23 +16,24 @@ class ChecksController extends Controller
     public function excel()
     {
      $user_data = DB::table('check__models')->get()->toArray();
-     $user_array[] = array('id', 'firstname', 'lastname', 'stationery', 'amount');
+     $user_array[] = array('id', 'firstname', 'lastname', 'item', 'amount','วันที่ยืม');
      foreach($user_data as $u)
      {
       $user_array[] = array(
        'id'  => $u->id,
        'firstname'   => $u->firstname,
        'lastname'    => $u->lastname,
-       'stationery'  => $u->stationery,
-       'amount'   => $u->amount
-      );
+       'item'  => $u->item,
+       'amount'   => $u->amount,
+       'date' => $u->date,
+       );
      }
      Excel::create('user_data', function($excel) use ($user_array)
      {
       $excel->setTitle('Stock_เครื่องเขียน');
-      $excel->sheet('user_data', function($sheet) use ($user_array)
+      $excel->sheet('Stock', function($sheet) use ($user_array)
       {
-       $sheet->fromArray($user_array, null, 'A1', false, false);
+       $sheet->fromArray($user_array, null, 'A2', false, false);
       });
      	})->download('xlsx');
     }
@@ -53,8 +54,8 @@ class ChecksController extends Controller
         [ 
           'firstname'=> request()->get('firstname'),
         'lastname'=> request()->get('lastname'),
-        'stationery'=> request()->get('stationery'),
-        'firstname'=> request()->get('firstname'),
+        'item'=> request()->get('item'),
+        'amount'=> request()->get('amount'),
       ]);
       return redirect('checks');
     }
